@@ -1,6 +1,6 @@
 
 
-console.log('Client side JS file loaded')
+
 
 // fetch is for BROWSER, not nodejs
 
