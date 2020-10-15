@@ -17,7 +17,7 @@ const forecast = (lat, lon, callback) => {
         } else {
 
             const { weather_descriptions, temperature, feelslike } = body.current
-            callback(undefined, `Name: ${body.location.name}, Description: ${weather_descriptions}, Temperature: ${temperature} degrees C, Feels like: ${feelslike} degrees C`, {
+            callback(undefined, `Description: ${weather_descriptions}, Temperature: ${temperature} degrees C, Feels like: ${feelslike} degrees C`, {
                 location: body.location.name,
                 weater_desc: weather_descriptions,
                 temp: temperature,
