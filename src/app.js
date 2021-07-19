@@ -2,7 +2,8 @@ const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
 const forecast = require('./utils/forecast')
-const geocode = require('./utils/geocode')
+const { geocode, reverseGeocode } = require('./utils/geocode')
+const { callbackify } = require('util')
 
 const app = express()
 
@@ -65,8 +66,6 @@ app.get('/weather', (req, res) => {
             if (error) {
                 return res.send({ error })
             }
-            //console.log(location)
-            //console.log(forecastData)
 
             res.send({
                 address: req.query.address,
@@ -76,6 +75,23 @@ app.get('/weather', (req, res) => {
         })
     })
  
+})
+
+app.get('/my_location', (req, res) => {
+
+    reverseGeocode(req.query.longitude, req.query.latitude, (error, { latitude, longitude, location } = {}) => {
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({ error })
+            }
+    
+            res.send({
+                forecast: forecastData,
+                location: location
+            })
+        })
+    })
+
 })
 
 app.get('/products', (req,res) => {
